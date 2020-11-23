@@ -1,0 +1,25 @@
+---
+version: "1.0"
+
+user:
+  name: null
+  password: null
+  privateKey: null
+  authorizedKeys: []
+
+server:
+  root: ""
+  basicAuth: []
+    #- location: /
+    #  users: |
+    #    vanegmond:$2a$13$R39DBuhp7V8nAjKJFcBu0.GEtQpuJc.CgK.rTow5.dmE1/0Zlj/FC
+
+php:
+  uploadLimit: "32"
+  memoryLimit: "256"
+  timezone: "Europe/Amsterdam"
+
+supervisor:
+  services: []
+    #- name: "horizon"
+    #  command: "/usr/local/bin/php /opt/vanegmond/app/public/release/artisan queue:work"

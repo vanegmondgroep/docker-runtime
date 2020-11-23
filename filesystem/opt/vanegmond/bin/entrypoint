@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -a
+set -e
+set -o pipefail
+
+if [ -f "/opt/vanegmond/etc/supervisor/supervisor.conf" ]; then
+    ENTRYPOINT_PARAMS='--skip-usermods' 
+fi
+
+runtime config:generate /opt/vanegmond/templates /opt/vanegmond/etc --configFile=/opt/vanegmond/runtime/defaults.yml --mergeFile=/opt/vanegmond/config/runtime.yml
+
+runtime log "Running entrypoint script"
+chmod +x /opt/vanegmond/etc/entrypoint.sh && /opt/vanegmond/etc/entrypoint.sh $ENTRYPOINT_PARAMS
+
+if [ -d /opt/vanegmond/bin/entrypoint.d ] ; then
+    run-parts --exit-on-error /opt/vanegmond/bin/entrypoint.d
+fi
+
+exec "$@"

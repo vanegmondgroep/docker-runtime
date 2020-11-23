@@ -1,0 +1,16 @@
+name: build
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build and deploy Docker image
+        run: |
+          if [[ ${GITHUB_REF##*/} = "master" ]]; then export DOCKER_TAG=latest; else export DOCKER_TAG=${GITHUB_REF##*/}; fi
+          echo ${{ secrets.CR_DEPLOY_TOKEN }} | docker login ghcr.io -u ${{ secrets.CR_DEPLOY_USER }} --password-stdin
+          docker build . --tag ghcr.io/vanegmondgroep/runtime:$DOCKER_TAG
+          docker push ghcr.io/vanegmondgroep/runtime:$DOCKER_TAG
