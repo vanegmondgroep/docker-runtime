@@ -42,6 +42,12 @@ RUN ln -sf /usr/local/lsws/lsphp$PHP_VERSION/bin/php /usr/local/bin/php \
     && ln -sf /opt/vanegmond/etc/litespeed/httpd_config.conf /usr/local/lsws/conf/httpd_config.conf \
     && ln -sf /opt/vanegmond/etc/php/php.ini /usr/local/lsws/lsphp74/etc/php/7.4/mods-available/99-vanegmond.ini
 
+# ----- Runtime ----- #
+
+RUN wget https://github.com/sitepilot/runtime/releases/latest/download/runtime -O /opt/vanegmond/bin/runtime \
+    && chmod +x /opt/vanegmond/bin/runtime \
+    && runtime --version
+
 # ----- Composer ----- #
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -49,12 +55,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer \
     && php -r "unlink('composer-setup.php');" \
     && composer --version
-
-# ----- Runtime ----- #
-
-RUN wget https://github.com/sitepilot/runtime/releases/latest/download/runtime -O /opt/vanegmond/bin/runtime \
-    && chmod +x /opt/vanegmond/bin/runtime \
-    && runtime --version
 
 # ----- NodeJS ----- #
 
