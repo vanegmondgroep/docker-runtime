@@ -42,6 +42,13 @@ RUN ln -sf /usr/local/lsws/lsphp$PHP_VERSION/bin/php /usr/local/bin/php \
     && ln -sf /opt/vanegmond/etc/litespeed/httpd_config.conf /usr/local/lsws/conf/httpd_config.conf \
     && ln -sf /opt/vanegmond/etc/php/php.ini /usr/local/lsws/lsphp74/etc/php/7.4/mods-available/99-vanegmond.ini
 
+# ----- PHP SQLSRV Extension ----- #
+
+RUN apt-get update && apt-get install -y gnupg \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && ACCEPT_EULA=Y install-packages msodbcsql17
+
 # ----- Runtime ----- #
 
 RUN wget https://github.com/sitepilot/runtime/releases/latest/download/runtime -O /opt/vanegmond/bin/runtime \

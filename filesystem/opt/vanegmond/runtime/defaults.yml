@@ -21,5 +21,6 @@ php:
 
 supervisor:
   services: []
-    #- name: "horizon"
-    #  command: "/usr/local/bin/php /opt/vanegmond/app/public/release/artisan queue:work"
+    #- name: "scheduler"
+    #  command: "/usr/local/bin/php artisan schedule:work"
+    #  workdir: "/opt/vanegmond/app/public"
